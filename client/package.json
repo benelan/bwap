@@ -1,23 +1,20 @@
 {
-  "description": "Leaflet React demo",
+  "description": "Book Swap App",
   "scripts": {
     "start": "node ./scripts/start.js",
     "build": "node ./scripts/build.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clhenrick/React-Leaflet-demo"
+    "url": "git+https://github.com/benelan/bwap"
   },
   "keywords": [
     "react, leaflet"
   ],
-  "author": "Chris Henrick",
+  "author": "Ben Elan",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/clhenrick/React-Leaflet-demo/issues"
-  },
-  "homepage": "http://clhenrick.github.io/React-Leaflet-demo",
-  "name": "react-leaflet-demo",
+  "homepage": "http://github.com/benelan/bwap",
+  "name": "bwap",
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
