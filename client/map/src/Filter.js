@@ -2,7 +2,7 @@ import React from 'react';
 
 // the UI component for filtering the subway entrances by subway line
 export default (props) => {
-  const { lines, filterLines } = props;
+  const { genres, filterGenres } = props;
 
   // this is the JSX that will become the Filter UI in the DOM, notice it looks pretty similar to HTML
   // notice in the select element onChange is set to the updateFilter method
@@ -11,18 +11,18 @@ export default (props) => {
   return (
     <div className="filterSubwayLines">
       <hr/>
-      <h3>Brooklyn Subway Entrances</h3>
-      <p>A <a href="http://leafletjs.com/">Leaflet</a> &amp; <a href="https://facebook.github.io/react/">React</a> demo</p>
-      <p>Filter Entrances by Subway Line</p>
+      <h3>Find a Bwapper</h3>
+      <p>Use the filters to find a bwapper with a book you want</p>
+      <p>Filter by Genre</p>
       <select defaultValue="*"
         type="select"
-        name="filterlines"
-        onChange={(e) => filterLines(e)}>
+        name="filtergenres"
+        onChange={(e) => filterGenres(e)}>
           { /* We render the select's option elements by maping each of the values of subwayLines array to option elements */ }
           {
-            lines.map((line, i) => {
+            genres.map((genre, i) => {
               return (
-                  <option value={line} key={i}>{line}</option>
+                  <option value={genre} key={i}>{genre}</option>
                 );
             }, this)
           }

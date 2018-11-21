@@ -3,20 +3,19 @@ import L from 'leaflet';
 // postCSS import of Leaflet's CSS
 import 'leaflet/dist/leaflet.css';
 // using webpack json loader we can import our geojson file like this
-import geojson from 'json!./bk_subway_entrances.geojson';
+import geojson from 'json!./users.geojson';
 // import local components Filter and ForkMe
 import Filter from './Filter';
-import ForkMe from './ForkMe';
 
 // store the map configuration properties in an object,
 // we could also move this to a separate file & import it if desired.
 let config = {};
 config.params = {
-  center: [40.655769,-73.938503],
+  center: [44.0607674, -123.1925905],
   zoomControl: false,
-  zoom: 13,
-  maxZoom: 19,
-  minZoom: 11,
+  zoom: 8,
+  maxZoom: 16,
+  minZoom:2,
   scrollwheel: false,
   legends: true,
   infoControl: false,
@@ -25,7 +24,7 @@ config.params = {
 config.tileLayer = {
   uri: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
   params: {
-    minZoom: 11,
+    minZoom: 1,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
     id: '',
     accessToken: ''
@@ -34,7 +33,7 @@ config.tileLayer = {
 
 // array to store unique names of Brooklyn subway lines,
 // this eventually gets passed down to the Filter component
-let subwayLineNames = [];
+let genreIDs = [];
 
 class Map extends Component {
   constructor(props) {
@@ -44,8 +43,8 @@ class Map extends Component {
       tileLayer: null,
       geojsonLayer: null,
       geojson: null,
-      subwayLinesFilter: '*',
-      numEntrances: null
+      genresFilter: '*',
+      numUsers: null
     };
     this._mapNode = null;
     this.updateMap = this.updateMap.bind(this);
@@ -71,8 +70,8 @@ class Map extends Component {
       this.addGeoJSONLayer(this.state.geojson);
     }
 
-    // check to see if the subway lines filter has changed
-    if (this.state.subwayLinesFilter !== prevState.subwayLinesFilter) {
+    // check to see if the genres filter has changed
+    if (this.state.genresFilter !== prevState.genresFilter) {
       // filter / re-render the geojson overlay
       this.filterGeoJSONLayer();
     }
@@ -88,20 +87,20 @@ class Map extends Component {
     // could also be an AJAX request that results in setting state with the geojson data
     // for simplicity sake we are just importing the geojson data using webpack's json loader
     this.setState({
-      numEntrances: geojson.features.length,
+      numUsers: geojson.features.length,
       geojson
     });
   }
 
   updateMap(e) {
-    let subwayLine = e.target.value;
-    // change the subway line filter
-    if (subwayLine === "All lines") {
-      subwayLine = "*";
+    let genre = e.target.value;
+    // change the genre filter
+    if (genre === "All genres") {
+      genre = "*";
     }
     // update our state with the new filter value
     this.setState({
-      subwayLinesFilter: subwayLine
+      genresFilter: genre
     });
   }
 
@@ -143,10 +142,13 @@ class Map extends Component {
   filterFeatures(feature, layer) {
     // filter the subway entrances based on the map's current search filter
     // returns true only if the filter value matches the value of feature.properties.LINE
-    const test = feature.properties.LINE.split('-').indexOf(this.state.subwayLinesFilter);
-    if (this.state.subwayLinesFilter === '*' || test !== -1) {
-      return true;
+    if (this.state.genresFilter !== '*') {
+      const test = feature.properties.genres.indexOf(parseInt(this.state.genresFilter,10));
+      if (test === -1) {
+        return false;
+      }
     }
+    return true;
   }
 
   pointToLayer(feature, latlng) {
@@ -165,29 +167,26 @@ class Map extends Component {
   }
 
   onEachFeature(feature, layer) {
-    if (feature.properties && feature.properties.NAME && feature.properties.LINE) {
-
-      // if the array for unique subway line names has not been made, create it
-      // there are 19 unique names total
-      if (subwayLineNames.length < 19) {
-
+    if (feature.properties && feature.properties.uid && feature.properties.genres) {
+        if (genreIDs.indexOf("All genres") === - 1) {
         // add subway line name if it doesn't yet exist in the array
-        feature.properties.LINE.split('-').forEach(function(line, index){
-          if (subwayLineNames.indexOf(line) === -1) subwayLineNames.push(line);
+        feature.properties.genres.forEach(function(g, index){
+          if (genreIDs.indexOf(g) === -1) genreIDs.push(g);
         });
 
         // on the last GeoJSON feature
-        if (this.state.geojson.features.indexOf(feature) === this.state.numEntrances - 1) {
+        if (this.state.geojson.features.indexOf(feature) === this.state.numUsers - 1) {
           // use sort() to put our values in alphanumeric order
-          subwayLineNames.sort();
+          genreIDs.sort();
           // finally add a value to represent all of the subway lines
-          subwayLineNames.unshift('All lines');
+          genreIDs.unshift('All genres');
         }
       }
-
       // assemble the HTML for the markers' popups (Leaflet's bindPopup method doesn't accept React JSX)
-      const popupContent = `<h3>${feature.properties.NAME}</h3>
-        <strong>Access to MTA lines: </strong>${feature.properties.LINE}`;
+      const popupContent = `<h3>${feature.properties.uid}</h3>
+        <strong>User likes: </strong>${feature.properties.genres}<br>
+        <strong>User has: </strong>${feature.properties.bh}<br>
+        <strong>User wants: </strong>${feature.properties.bw}<br>`;
 
       // add our popups
       layer.bindPopup(popupContent);
@@ -209,18 +208,17 @@ class Map extends Component {
   }
 
   render() {
-    const { subwayLinesFilter } = this.state;
+    const { genresFilter } = this.state;
     return (
       <div id="mapUI">
         {
-          /* render the Filter component only after the subwayLines array has been created */
-          subwayLineNames.length &&
-            <Filter lines={subwayLineNames}
-              curFilter={subwayLinesFilter}
-              filterLines={this.updateMap} />
+          /* render the Filter component only after the genresIDs array has been created */
+          genreIDs.length &&
+            <Filter genres={genreIDs}
+              curFilter={genresFilter}
+              filterGenres={this.updateMap} />
         }
         <div ref={(node) => this._mapNode = node} id="map" />
-        <ForkMe />
       </div>
     );
   }
