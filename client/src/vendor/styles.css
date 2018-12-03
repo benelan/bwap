@@ -1,0 +1,58 @@
+.foot {
+	bottom: 0px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+#root, #map, #mapUI {
+  width: inherit;
+  height: inherit;
+  background-color: #000;
+}
+.filterGenres {
+  position: absolute;
+  top: 10px;
+  z-index: 10;
+  width: 200px;
+  height: auto;
+  background: hsla(0,100%,100%,0.8);
+  margin: 10px;
+  font-family: sans-serif;
+  font-size: 13px;
+  padding: 5px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+}
+.filterGenres hr {
+  border: 1px solid #000;
+  margin: 5px;
+}
+.filterGenres h3 {
+  margin-top: 0;
+  padding-left: 5px;
+}
+.filterGenres p {
+  padding-left: 5px;
+}
+.filterGenres select {
+  display: block;
+  margin: 0 auto;
+}
+
+html, body {
+            background-image: url("../book.png");
+            background-repeat: no-repeat, repeat;
+            
+            height: 100%;}
+        a { cursor: pointer; }
+        .help-block { font-size: 12px; }
+        #brand{
+            font-size: 40px;
+        }
+        .jumbotron {
+            background-color: white;
+        }
