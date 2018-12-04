@@ -25,9 +25,8 @@ class App extends React.Component {
     render() {
         const { alert } = this.props;
         return (
-            <div className="jumbotron">
                 <div className="container">
-                    <div className="col-sm-8 col-sm-offset-2">
+                    <div className="col-sm-12">
                         {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                         }
@@ -41,7 +40,6 @@ class App extends React.Component {
                         </Router>
                     </div>
                 </div>
-            </div>
         );
     }
 }

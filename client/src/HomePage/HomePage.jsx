@@ -39,8 +39,6 @@ class HomePage extends React.Component {
                 <p>
                     <Link to="/map">Map</Link> <br></br>
                     <Link to="/login">Logout</Link>
-                    
-
                 </p>
             </div>
         );

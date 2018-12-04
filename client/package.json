@@ -11,15 +11,15 @@
   },
   "dependencies": {
     "history": "^4.6.3",
+    "leaflet": "^0.7.7",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
     "redux": "^3.7.2",
+    "redux-form": "^7.4.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
-    "json-loader": "^0.5.4",
-    "leaflet": "^0.7.7"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",

@@ -212,7 +212,8 @@ class MapPage extends Component {
   render() {
     const { genresFilter } = this.state;
     return (
-      <div id="mapUI">
+      <div className="col-12">
+      <div id="mapUI" >
         {
           /* render the Filter component only after the genresIDs array has been created */
           genreIDs.length &&
@@ -221,6 +222,7 @@ class MapPage extends Component {
               filterGenres={this.updateMap} />
         }
         <div ref={(node) => this._mapNode = node} id="map" />
+      </div>
       </div>
     );
   }
