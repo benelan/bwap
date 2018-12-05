@@ -1,8 +1,19 @@
-#map, #mapUI {
+#mapUI {
   width: 100%;
   height: 80vh;
   background-color: transparent;
-  left:0px;
+
+
+}
+
+#map {
+  width: 100%;
+  height: 80vh;
+  background-color: transparent;
+  border: 2px solid #938D80;
+  outline: 1px solid #938D80;
+  outline-offset: 2px;
+
 }
 
 .filterGenres {
@@ -35,4 +46,10 @@
 .filterGenres select {
   display: block;
   margin: 0 auto;
+}
+
+.leaflet-top, .leaflet-bottom {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
 }

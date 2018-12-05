@@ -23,7 +23,7 @@ config.params = {
   attributionControl: true
 };
 config.tileLayer = {
-  uri: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+  uri: 'http://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
   params: {
     minZoom: 1,
     id: '',
@@ -155,12 +155,12 @@ class MapPage extends Component {
     // renders our GeoJSON points as circle markers, rather than Leaflet's default image markers
     // parameters to style the GeoJSON markers
     var markerParams = {
-      radius: 4,
-      fillColor: 'orange',
-      color: '#fff',
+      radius: 5,
+      fillColor: '#FFAA00',
+      color: '#938D80',
       weight: 1,
-      opacity: 0.5,
-      fillOpacity: 0.8
+      opacity: 1,
+      fillOpacity: 1
     };
 
     return L.circleMarker(latlng, markerParams);
