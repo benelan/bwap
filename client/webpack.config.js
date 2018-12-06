@@ -3,6 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/index.jsx',
+    mode: 'development',
     output: {
         path: path.resolve('dist'),
         filename: 'bundle.js'
@@ -11,18 +12,27 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
+                
                 loader: 'babel-loader',
+                
                 query: {
-                    presets: ['react', 'es2015', 'stage-3']
+                    presets: ['@babel/react', '@babel/preset-env']
+                
                 }
             },
             {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader!postcss-loader'
+              test: /\.css$/,
+              use: [
+                "style-loader",
+                "css-loader",
+                {
+                  loader: "postcss-loader",
+                }
+              ]
             },
             {
                 test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
