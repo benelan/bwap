@@ -10,8 +10,9 @@ export default (props) => {
   // to the parent component, Map, which reloads the GeoJSON data with the current filter value
   return (
     <div className="filterGenres">
-      <hr/>
+     
       <h3>Find a Bwapper</h3>
+       <hr/>
       <p>Use the filters to find a bwapper with a book you want</p>
       <p>Filter by Genre</p>
       <select defaultValue="*"
