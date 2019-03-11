@@ -30,9 +30,8 @@ class App extends React.Component {
     render() {
         const { alert } = this.props;
         return (
-                <React.Fragment>
-                <NavTop />
-                
+            <React.Fragment>
+            <NavTop />
                 <div className="container">
                     <div className="col-sm-12">
                         {alert.message &&
